@@ -1,4 +1,4 @@
-## Fullstack osa0
+# Fullstack osa0
 
 ### 0.4 Uusi muistiinpano
 ![notes](notes.png)
