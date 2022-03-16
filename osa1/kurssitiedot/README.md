@@ -1,4 +1,4 @@
-# Tehtävät 1.1-1.2
+# Tehtävät 1.1-1.5
 
 ### osa1 lopullinen versio
 
@@ -17,3 +17,6 @@
 
 ### 1.4 kurssitiedot, step4
 [commit step4](https://github.com/jeakaura/fullstack-22/commit/56a93a1dc48dbaabbbf515227885949255ceba6d)
+
+### 1.5 kurssitiedot, step5
+[commit step5](https://github.com/jeakaura/fullstack-22/commit/a43aaef0ca296c2554d316ade3ee8d87c3ae2cdc)
