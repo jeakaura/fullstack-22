@@ -14,16 +14,23 @@ const Statistics = ({ good, neutral, bad}) => {
   const all = good + neutral + bad
   const average = (good - bad)/all
   const positive = (good/all)*100
-  return(
-    <div>
-      hyvä {good} <br />
-      neutraali {neutral} <br />
-      huono {bad} <br />
-      kaikki {all} <br />
-      keskiarvo {average} <br />
-      positiivisia {positive}%
-    </div>
-  )
+
+  if (all==0) {
+    return(
+      <div>Palautetta ei ole annettu</div>
+    )
+  } else {
+    return(
+      <div>
+        hyvä {good} <br />
+        neutraali {neutral} <br />
+        huono {bad} <br />
+        kaikki {all} <br />
+        keskiarvo {average} <br />
+        positiivisia {positive}%
+      </div>
+    )
+  }
 }
 
 const App = () => {
