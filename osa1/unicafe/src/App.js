@@ -6,28 +6,32 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
-const Display = ({ counter, text }) => (
-  <div>{text} {counter}</div>
-)
+const StatisticLine = (props) => {
+  return(
+    <div>
+      {props.text} {props.value}
+    </div>
+  )
+}
 
 const Statistics = ({ good, neutral, bad}) => {
   const all = good + neutral + bad
   const average = (good - bad)/all
   const positive = (good/all)*100
 
-  if (all==0) {
+  if (all===0) {
     return(
       <div>Palautetta ei ole annettu</div>
     )
   } else {
     return(
       <div>
-        hyvä {good} <br />
-        neutraali {neutral} <br />
-        huono {bad} <br />
-        kaikki {all} <br />
-        keskiarvo {average} <br />
-        positiivisia {positive}%
+        <StatisticLine text="hyvä" value={good} />
+        <StatisticLine text="neutraali" value={neutral} />
+        <StatisticLine text="huono" value={bad} />
+        <StatisticLine text="kaikki" value={all} />
+        <StatisticLine text="keskiarvo" value={average} />
+        <StatisticLine text="positiivisia %" value={positive} />
       </div>
     )
   }
