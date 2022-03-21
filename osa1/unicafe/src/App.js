@@ -10,6 +10,19 @@ const Display = ({ counter, text }) => (
   <div>{text} {counter}</div>
 )
 
+const Statistics = ({ good, neutral, bad}) => {
+  const all = good + neutral + bad
+  const average = (good - bad)/all
+  const positive = (good/all)*100
+  return(
+    <div>
+      kaikki {all} <br />
+      keskiarvo {average} <br />
+      positiivisia {positive}%
+    </div>
+  )
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -26,9 +39,7 @@ const App = () => {
       <Display counter={good} text="hyvä" />
       <Display counter={neutral} text="neutraali" />
       <Display counter={bad} text="huono" />
-      <Display counter={good + neutral + bad} text="kaikki" />
-      <Display counter={(good - bad)/(good + neutral + bad)} text="keskiarvo" />
-      <Display counter={good / (good + neutral + bad) * 100} text="positiivisia %" />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
