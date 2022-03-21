@@ -16,6 +16,9 @@ const Statistics = ({ good, neutral, bad}) => {
   const positive = (good/all)*100
   return(
     <div>
+      hyvä {good} <br />
+      neutraali {neutral} <br />
+      huono {bad} <br />
       kaikki {all} <br />
       keskiarvo {average} <br />
       positiivisia {positive}%
@@ -36,9 +39,6 @@ const App = () => {
       <Button handleClick={() => setNeutral(neutral + 1)} text={"neutraali"} />
       <Button handleClick={() => setBad(bad + 1)} text={"huono"} />
       <h1>statistiikat</h1>
-      <Display counter={good} text="hyvä" />
-      <Display counter={neutral} text="neutraali" />
-      <Display counter={bad} text="huono" />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
