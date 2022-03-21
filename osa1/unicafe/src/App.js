@@ -26,6 +26,9 @@ const App = () => {
       <Display counter={good} text="hyvä" />
       <Display counter={neutral} text="neutraali" />
       <Display counter={bad} text="huono" />
+      <Display counter={good + neutral + bad} text="kaikki" />
+      <Display counter={(good - bad)/(good + neutral + bad)} text="keskiarvo" />
+      <Display counter={good / (good + neutral + bad) * 100} text="positiivisia %" />
     </div>
   )
 }
