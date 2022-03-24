@@ -21,6 +21,18 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(pisteTaul)
 
+  const mostPoints = () => {
+    let eniten = 0;
+    let enitenIdx = 0;
+    for(let i=0; i<anecdotes.length; i++) {
+      if (eniten < points[i]) {
+        eniten = points[i];
+        enitenIdx = i;
+      }
+    }
+    return enitenIdx
+  }
+
   const vote = () => {
     const copy = [...points]
     copy[selected] += 1
@@ -29,12 +41,15 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br />
       has {points[selected]} votes
       <br />
       <Button handleClick={() => vote() } text={"vote"} />
       <Button handleClick={() => setSelected(Math.floor(Math.random() * 6))} text={"next anecdote"} />
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[mostPoints()]}
     </div>
   )
 }
