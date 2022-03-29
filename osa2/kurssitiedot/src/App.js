@@ -39,7 +39,10 @@ const Part = ({ name, exercises }) => {
 const Yhteensa = ({ parts }) => {
   console.log(parts)
   const total = parts.reduce(
-    (edellinenArvo, nykyinenArvo) => edellinenArvo + nykyinenArvo.exercises, 
+    (edellinenArvo, nykyinenArvo) => {
+      console.log(edellinenArvo, nykyinenArvo)
+      return edellinenArvo + nykyinenArvo.exercises;
+    }, 
     0
   );
 
