@@ -1,8 +1,11 @@
+import React from "react";
+
 const Course = ({ course }) => {
   return(
     <div>
       <Header content={course} />
       <Content parts={course.parts} />
+      <Yhteensa parts={course.parts} />
     </div>
   )
 }
@@ -27,9 +30,21 @@ const Content = ({ parts }) => {
 
 const Part = ({ name, exercises }) => {
   return(
-    <div>
+    <p>
       {name} {exercises}
-    </div>
+    </p>
+  )
+}
+
+const Yhteensa = ({ parts }) => {
+  console.log(parts)
+  const total = parts.reduce(
+    (edellinenArvo, nykyinenArvo) => edellinenArvo + nykyinenArvo.exercises, 
+    0
+  );
+
+  return(
+    <p><b>Total of {total} exercises</b></p>
   )
 }
 
@@ -52,6 +67,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
