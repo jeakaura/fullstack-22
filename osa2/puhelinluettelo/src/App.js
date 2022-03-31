@@ -11,8 +11,13 @@ const App = () => {
       name: newName,
       id: persons.length + 1,
     }
-  
-    setPersons(persons.concat(noteObject))
+
+    if (persons.some((person) => person.name === newName)) {
+      window.alert(`${newName} on jo puhelinluettelossa`)
+    }
+    else {
+      setPersons(persons.concat(noteObject))
+    }
     setNewName('')
   }
 
