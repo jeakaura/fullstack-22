@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import Person from './components/Person'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import AddNew from './components/AddNew'
 
 const App = () => {
   const [persons, setPersons]         = useState([
@@ -19,7 +21,6 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
-
     if (persons.some((person) => person.name === newName)) {
       window.alert(`${newName} on jo puhelinluettelossa`)
     }
@@ -47,32 +48,28 @@ const App = () => {
   return (
     <div>
       <h1>Puhelinluettelo</h1>
-        <div>
-        hae nimellä:
-          <input onChange={handleFilter} />
-        </div>
+
+      <Filter 
+        onChange={handleFilter} 
+      />
+
       <h2>Lisää uusi</h2>
-      <form onSubmit={addName}>
-        nimi:
-        <input
-          value={newName}
-          onChange={handleNoteChange}
-        />
-        <br />
-        numero:
-        <input
-          value={newNumber}
-          onChange={handleNumberChange}
-        />
-        <br />
-        <button type="submit">lisää</button>
-      </form>
+
+      <AddNew
+        onSubmit={addName}
+        newName={newName}
+        handleNameChange={handleNoteChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
+
       <h2>Numerot</h2>
-      <div>
-        {filtteri.map(name => 
-          <Person key={name.id} person={name} number={name.number} />
-        )}
-      </div>
+
+      <Persons
+        filtteri={filtteri}
+        persons={persons}
+      />
+
     </div>
   )
 
