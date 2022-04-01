@@ -11,5 +11,6 @@ Full Stack Open 2022 kurssin tehtäväpalautukset.
     │   └── unicafe
     └── osa2
         ├── kurssitiedot 
+        ├── maidentiedot 
         └── puhelinluettelo
 ```
