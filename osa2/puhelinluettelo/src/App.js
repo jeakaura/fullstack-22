@@ -3,12 +3,14 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import AddNew from './components/AddNew'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons,     setPersons]     = useState([]) 
   const [newName,     setNewName]     = useState('')
   const [newNumber,   setNewNumber]   = useState('')
   const [searchName,  setSearchName]  = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     personService
@@ -36,6 +38,14 @@ const App = () => {
         .then((response) => {
           setPersons(persons.map(person => person.id !== id ? person : response.data))
         })
+        .then(() => {
+          setErrorMessage(
+            `Henkilön '${newName}' numero korvattiin onnistuneesti.`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
         setNewName('')
         setNewNumber('')
         return;
@@ -47,6 +57,14 @@ const App = () => {
       .create(noteObject)
       .then(response => {
         setPersons(persons.concat(response.data))
+      })
+      .then(() => {
+        setErrorMessage(
+          `Henkilö '${newName}' lisättiin onnistuneesti puhelinluetteloon.`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
     }
     setNewName('')
@@ -62,6 +80,14 @@ const App = () => {
       .then(() => {
         const uusi = persons.filter((person) => person.id !== id);
         setPersons(uusi);
+      })
+      .then(() => {
+        setErrorMessage(
+          `Henkilö '${person.name}' poistettiin onnistuneesti puhelinluettelosta.`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
     }
   }
@@ -83,6 +109,9 @@ const App = () => {
   return (
     <div>
       <h1>Puhelinluettelo</h1>
+      <div>
+        <Notification message={errorMessage} />
+      </div>
 
       <Filter 
         onChange={handleFilter} 
