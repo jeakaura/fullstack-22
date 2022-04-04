@@ -26,7 +26,20 @@ const App = () => {
       id: persons.length + 1,
     }
     if (persons.some((person) => person.name === newName)) {
-      window.alert(`${newName} on jo puhelinluettelossa`)
+      const person = persons.find((p) => p.name === newName);
+      const { id } = person;
+      const vahvistaMuutos = window.confirm(`${newName} on jo puhelinluettelossa, korvataanko vanha numero uudella?`)
+
+      if (vahvistaMuutos) {
+        personService
+        .update(person.id, noteObject)
+        .then((response) => {
+          setPersons(persons.map(person => person.id !== id ? person : response.data))
+        })
+        setNewName('')
+        setNewNumber('')
+        return;
+      }
     }
     else {
       setPersons(persons.concat(noteObject))
