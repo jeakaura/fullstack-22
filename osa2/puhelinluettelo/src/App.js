@@ -40,6 +40,19 @@ const App = () => {
     setNewNumber('')
   }
 
+  const removeName = (id) => {
+    const person = persons.find((p) => p.id === id);
+    const vahvistaPoisto = window.confirm(`Poistetaanko ${person.name}?`);
+    if (vahvistaPoisto) {
+      personService
+      .remove(id)
+      .then(() => {
+        const uusi = persons.filter((person) => person.id !== id);
+        setPersons(uusi);
+      })
+    }
+  }
+
   const handleNoteChange = (event) => {
     setNewName(event.target.value)
   }
@@ -77,6 +90,7 @@ const App = () => {
       <Persons
         filtteri={filtteri}
         persons={persons}
+        removeName={removeName}
       />
 
     </div>
