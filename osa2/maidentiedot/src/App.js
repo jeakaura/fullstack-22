@@ -36,6 +36,7 @@ const App = () => {
       ) : (
         <Countries
           naytettavatMaat={naytettavatMaat}
+          asetaNaytettavatMaat={asetaNaytettavatMaat}
         />
       )}
     </div>
