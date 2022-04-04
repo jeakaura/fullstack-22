@@ -30,6 +30,11 @@ const App = () => {
     }
     else {
       setPersons(persons.concat(noteObject))
+      axios
+        .post('http://localhost:3001/persons', noteObject)
+        .then(response => {
+          console.log(response)
+      })
     }
     setNewName('')
     setNewNumber('')
