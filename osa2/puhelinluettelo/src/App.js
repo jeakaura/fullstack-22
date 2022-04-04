@@ -10,7 +10,7 @@ const App = () => {
   const [newName,     setNewName]     = useState('')
   const [newNumber,   setNewNumber]   = useState('')
   const [searchName,  setSearchName]  = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -38,12 +38,18 @@ const App = () => {
         .then((response) => {
           setPersons(persons.map(person => person.id !== id ? person : response.data))
         })
+        .catch(error => {
+          alert(
+            `Henkilö '${newName}' on jo ehditty poistamaan palvelimelta`
+          )
+          setPersons(persons.filter(n => n.id !== id))
+        })
         .then(() => {
-          setErrorMessage(
+          setMessage(
             `Henkilön '${newName}' numero korvattiin onnistuneesti.`
           )
           setTimeout(() => {
-            setErrorMessage(null)
+            setMessage(null)
           }, 5000)
         })
         setNewName('')
@@ -59,11 +65,11 @@ const App = () => {
         setPersons(persons.concat(response.data))
       })
       .then(() => {
-        setErrorMessage(
+        setMessage(
           `Henkilö '${newName}' lisättiin onnistuneesti puhelinluetteloon.`
         )
         setTimeout(() => {
-          setErrorMessage(null)
+          setMessage(null)
         }, 5000)
       })
     }
@@ -82,11 +88,11 @@ const App = () => {
         setPersons(uusi);
       })
       .then(() => {
-        setErrorMessage(
+        setMessage(
           `Henkilö '${person.name}' poistettiin onnistuneesti puhelinluettelosta.`
         )
         setTimeout(() => {
-          setErrorMessage(null)
+          setMessage(null)
         }, 5000)
       })
     }
@@ -110,7 +116,7 @@ const App = () => {
     <div>
       <h1>Puhelinluettelo</h1>
       <div>
-        <Notification message={errorMessage} />
+        <Notification message={message} />
       </div>
 
       <Filter 
