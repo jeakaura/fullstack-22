@@ -30,6 +30,15 @@ app.get('/', (req, res) => {
   res.send('<p>Hello world!</p>')
 })
 
+app.get('/info', (req, res) => {
+    let LKM = persons.length
+    let PVM = new Date()
+    res.send(`
+        <p>Puhelinluettelossa on ${LKM} henkilön tiedot</p>
+        <p>Pyyntö tehtiin: ${PVM}</p>
+    `)
+  })
+
 app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
