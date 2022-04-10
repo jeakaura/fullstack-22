@@ -63,6 +63,18 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
+    if(!body.name || !body.number) {
+        return response.status(400).json({
+            error: 'nimi tai numero puuttuu'
+        })
+    }
+
+    if(persons.find(person => person.name === body.name)) {
+        return response.status(400).json({
+            error: 'nimen tulee olla uniikki'
+        })
+    }
+
     const person = {
         id: generateId(),
         name: body.name,
