@@ -9,8 +9,10 @@ Full Stack Open 2022 kurssin tehtäväpalautukset.
     │   ├── anekdootit
     │   ├── kurssitiedot
     │   └── unicafe
-    └── osa2
-        ├── kurssitiedot 
-        ├── maidentiedot 
-        └── puhelinluettelo
+    ├── osa2
+    │   ├── kurssitiedot
+    │   ├── maidentiedot
+    │   └── puhelinluettelo
+    └── osa3
+        └── puhelinluettelon-backend
 ```
