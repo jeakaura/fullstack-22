@@ -27,7 +27,12 @@ let persons = [
 ]
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :omatoken'))
+morgan.token('omatoken', (req, res) => {
+    if (req.method === 'POST') return JSON.stringify(req.body)
+    return null
+})
 
 app.get('/', (req, res) => {
   res.send('<p>Hello world!</p>')
