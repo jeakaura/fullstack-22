@@ -32,7 +32,7 @@ if (process.argv.length === 3) {
     })
 } else {
     person.save().then(result => {
-        console.log('henkilö tallennettiin!')
+        console.log(`henkilö ${person.name} numerolla ${person.number} tallennettiin!`)
         mongoose.connection.close()
     })
 }
