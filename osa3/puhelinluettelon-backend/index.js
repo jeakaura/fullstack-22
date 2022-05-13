@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
   res.send('<p>Hello world!</p>')
 })
 
-// hakee toimivasti infon
 app.get('/info', (req, res) => {
     let PVM = new Date()
     Person.find({}).then((persons) => {
@@ -39,7 +38,6 @@ app.get('/api/persons', (req, res, next) => {
   .catch((error) => next(error))
 })
 
-// hakee toimivasti yksittäisen henkilön
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
@@ -55,24 +53,23 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (req, res, next) => {
   const body = req.body
 
-  if (!body.name) {
-    return res.status(400).json({ error: 'Nimi pakollinen' })
+  if (body.name.length === 0) {
+    return res.status(400).json({ error: 'nimi puuttuu' })
   }
-
-  if (!body.number) {
-    return res.status(400).json({ error: 'Numero pakollinen' })
+  if (body.number.length === 0) {
+    return res.status(400).json({ error: 'numero puuttuu' })
   }
 
   const person = new Person({
     name: body.name,
-    number: body.number,
+    number: body.number
   })
 
   person.save().then(savedPerson => {
     res.json(savedPerson.toJSON())
-  })
-  .catch((error) => next(error))
+  }).catch(error => next(error))
 })
+
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
@@ -88,7 +85,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     number: request.body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  Person.findByIdAndUpdate(request.params.id, person, {new:true,runValidators:true})
     .then((updatedPerson) => {
       response.json(updatedPerson.toJSON())
     })
@@ -105,7 +102,9 @@ const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'Väärinmuotoiltu id' })
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)

@@ -27,6 +27,24 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
+    if (noteObject.name.length < 3) {
+      setMessage(
+        `error: Nimen tulee olla vähintään kolme merkkiä pitkä`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+      return
+    }
+    if (noteObject.number.length < 8) {
+      setMessage(
+        `error: Numeron tulee olla vähintään kahdeksan merkkiä pitkä`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+      return
+    }
     if (persons.some((person) => person.name === newName)) {
       const person = persons.find((p) => p.name === newName);
       const { id } = person;
@@ -71,6 +89,10 @@ const App = () => {
         setTimeout(() => {
           setMessage(null)
         }, 5000)
+      })
+      .catch(error => {
+        // pääset käsiksi palvelimen palauttamaan virheilmoitusolioon näin
+        console.log(error.response.data)
       })
     }
     setNewName('')
