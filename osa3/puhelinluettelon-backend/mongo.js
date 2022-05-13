@@ -14,12 +14,12 @@ const personSchema = new mongoose.Schema({
         type: String,
         minlength: 1,
         required: true
-      },
+    },
     number: {
         type: String,
         minlength: 1,
         required: true
-      },
+    },
 })
 
 const Person = mongoose.model('Person', personSchema)
@@ -40,6 +40,7 @@ if (process.argv.length === 3) {
     })
 } else {
     person.save().then(result => {
+        console.log(result)
         console.log(`henkilö ${person.name} numerolla ${person.number} tallennettiin!`)
         mongoose.connection.close()
     })

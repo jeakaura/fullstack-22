@@ -12,30 +12,30 @@ app.use(express.static('build'))
 app.use(express.json())
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :omatoken'))
-morgan.token('omatoken', (req, res) => {
+morgan.token('omatoken', (req) => {
     if (req.method === 'POST') return JSON.stringify(req.body)
     return null
 })
 
 app.get('/', (req, res) => {
-  res.send('<p>Hello world!</p>')
+    res.send('<p>Hello world!</p>')
 })
 
 app.get('/info', (req, res) => {
     let PVM = new Date()
     Person.find({}).then((persons) => {
-      res.send(`
-        <p>Puhelinluettelossa on ${persons.length} henkilön tiedot</p>
-        <p>Pyyntö tehtiin: ${PVM}</p>
-      `)
+        res.send(`
+          <p>Puhelinluettelossa on ${persons.length} henkilön tiedot</p>
+          <p>Pyyntö tehtiin: ${PVM}</p>
+        `)
     })
   })
 
 app.get('/api/persons', (req, res, next) => {
-  Person.find({}).then(persons => {
-    res.json(persons)
-  })
-  .catch((error) => next(error))
+    Person.find({}).then(persons => {
+      res.json(persons)
+    })
+    .catch((error) => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -75,6 +75,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
+      console.log(result)
     })
     .catch(error => next(error))
 })
@@ -85,7 +86,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     number: request.body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, {new:true,runValidators:true})
+  Person.findByIdAndUpdate(request.params.id, person, { new:true,runValidators:true })
     .then((updatedPerson) => {
       response.json(updatedPerson.toJSON())
     })
