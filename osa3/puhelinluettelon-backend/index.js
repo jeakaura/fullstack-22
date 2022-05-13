@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
   res.send('<p>Hello world!</p>')
 })
 
+// hakee toimivasti infon
 app.get('/info', (req, res) => {
     let PVM = new Date()
     Person.find({}).then((persons) => {
@@ -38,6 +39,7 @@ app.get('/api/persons', (req, res, next) => {
   .catch((error) => next(error))
 })
 
+// hakee toimivasti yksittäisen henkilön
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
