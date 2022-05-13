@@ -80,6 +80,19 @@ app.delete('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+  const person = {
+    name: request.body.name,
+    number: request.body.number,
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then((updatedPerson) => {
+      response.json(updatedPerson.toJSON())
+    })
+    .catch((error) => next(error))
+})
+
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'Tuntematon endpoint' })
 }
