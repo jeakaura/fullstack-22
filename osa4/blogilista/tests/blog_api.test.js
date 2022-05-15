@@ -32,7 +32,7 @@ beforeEach(async () => {
 })
 
 describe('jotain blogeja on tallennettuna aluksi', () => {
-  test('blogit palautuu json muodossa', async () => {
+  test('blogit palautuu json muodossa HTTP GET -pyynnöllä', async () => {
     await api
       .get('/api/blogs')
       .expect(200)
@@ -43,6 +43,14 @@ describe('jotain blogeja on tallennettuna aluksi', () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(testiBlogit.length)
+  })
+
+  test('blogeissa on id-kenttä', async () => {
+    const response = await api.get('/api/blogs')
+
+    for (let i=0; i < testiBlogit.length; i++) {
+      expect(response.body[i].id).toBeDefined()
+    }
   })
 })
 
