@@ -52,6 +52,24 @@ describe('jotain blogeja on tallennettuna aluksi', () => {
       expect(response.body[i].id).toBeDefined()
     }
   })
+
+  test('uuden blogin lisäys onnistuupi', async () => {
+    const uusi = {
+      title: 'Kissat ovat parhaita',
+      author: 'jeakaura',
+      url: 'http://localhost:3003/kissat',
+      likes: 25,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(uusi)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+      const response = await api.get('/api/blogs')
+      expect(response.body).toHaveLength(testiBlogit.length + 1)
+  })
 })
 
 afterAll(() => {
