@@ -70,6 +70,15 @@ describe('jotain blogeja on tallennettuna aluksi', () => {
       const response = await api.get('/api/blogs')
       expect(response.body).toHaveLength(testiBlogit.length + 1)
   })
+
+  test('blogipostauksen poisto', async () => {
+    const response = await api.get('/api/blogs')
+    const ekanId = response.body[0].id
+
+    await api
+    .delete(`/api/blogs/${ekanId}`)
+    .expect(204)
+  })
 })
 
 afterAll(() => {
