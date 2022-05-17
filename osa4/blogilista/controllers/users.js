@@ -12,6 +12,12 @@ usersRouter.post('/', async (request, response) => {
     })
   }
 
+  if (password.length < 3) {
+    return response.status(400).json({
+      error: 'salasanan tulee olla vähintään 3 merkkiä'
+    })
+  }
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
