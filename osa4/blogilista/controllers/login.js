@@ -17,6 +17,7 @@ loginRouter.post('/', async (request, response) => {
     })
   }
 
+  // token-perustainen kirjautuminen
   const userForToken = {
     username: user.username,
     id: user._id,
