@@ -15,6 +15,8 @@ Full Stack Open 2022 kurssin tehtäväpalautukset.
     │   └── puhelinluettelo
     ├── osa3
     │   └── puhelinluettelon-backend
-    └── osa4
-        └── blogilista
+    ├── osa4
+    │   └── blogilista
+    └── osa5
+        └── bloglist-frontend
 ```
