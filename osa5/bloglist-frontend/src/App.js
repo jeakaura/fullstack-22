@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Footer from './components/Footer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -45,7 +46,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Käyttäjätunnus tai salasana ei kelpaa')
+      setErrorMessage('Virhe: Käyttäjätunnus tai salasana ei kelpaa')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -63,12 +64,16 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      setErrorMessage(`Uusi blogi: "${title}", kirjoittajalta: "${author}" lisättiin!`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 10000)
 
       blogService.getAll().then(blogs =>
         setBlogs( blogs )
       )
     } catch (exception) {
-      setErrorMessage('Virhe uuden blogin luonnissa')
+      setErrorMessage('Virhe: Uuden blogin luominen ei onnistunut')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -83,7 +88,9 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <h2>Blogit - Kirjaudu</h2>
+        <h1>Blogit</h1>
+        <Notification message={errorMessage} />
+        <h3>Kirjaudu sisään</h3>
         <form onSubmit={handleLogin}>
           <div>
             käyttäjätunnus
@@ -105,15 +112,16 @@ const App = () => {
           </div>
           <button type="submit">kirjaudu sisään</button>
         </form>
-        <Notification message={errorMessage} />
+        <Footer />
       </div>
     )
   }
 
   return (
     <div>
-      <h2>Blogit</h2>
-      <p>{user.name} kirjautunut sisään 
+      <h1>Blogit</h1>
+      <Notification message={errorMessage} />
+      <p>{user.name} on kirjautunut sisään 
       <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
       </p>
       <h3>Luo uusi</h3>
@@ -147,11 +155,11 @@ const App = () => {
         </div>
         <button type="submit">luo uusi</button>
       </form>
-      <Notification message={errorMessage} />
-      <h3>Käyttäjän blogilista</h3>
+      <h3>Blogilista</h3>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <Footer />
     </div>
   )
 }
