@@ -11,6 +11,10 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
 
+  const [title, setTitle] = useState('') 
+  const [author, setAuthor] = useState('') 
+  const [url, setUrl] = useState('') 
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -41,7 +45,30 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      setErrorMessage('Käyttäjätunnus tai salasana ei kelpaa')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const handleUusiBlogi = async (event) => {
+    event.preventDefault()
+
+    try {
+      await blogService.create({
+        title, author, url,
+      })
+
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+
+      blogService.getAll().then(blogs =>
+        setBlogs( blogs )
+      )
+    } catch (exception) {
+      setErrorMessage('Virhe uuden blogin luonnissa')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -56,8 +83,7 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <h2>Kirjaudu</h2>
-        <Notification message={errorMessage} />
+        <h2>Blogit - Kirjaudu</h2>
         <form onSubmit={handleLogin}>
           <div>
             käyttäjätunnus
@@ -79,6 +105,7 @@ const App = () => {
           </div>
           <button type="submit">kirjaudu sisään</button>
         </form>
+        <Notification message={errorMessage} />
       </div>
     )
   }
@@ -89,6 +116,39 @@ const App = () => {
       <p>{user.name} kirjautunut sisään 
       <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
       </p>
+      <h3>Luo uusi</h3>
+      <form onSubmit={handleUusiBlogi}>
+        <div>
+          otsikko:
+          <input
+            type="text"
+            value={title}
+            name="Title"
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </div>
+        <div>
+          kirjoittaja:
+          <input
+            type="text"
+            value={author}
+            name="Author"
+            onChange={({ target }) => setAuthor(target.value)}
+          />
+        </div>
+        <div>
+          linkki:
+          <input
+            type="text"
+            value={url}
+            name="Url"
+            onChange={({ target }) => setUrl(target.value)}
+          />
+        </div>
+        <button type="submit">luo uusi</button>
+      </form>
+      <Notification message={errorMessage} />
+      <h3>Käyttäjän blogilista</h3>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
