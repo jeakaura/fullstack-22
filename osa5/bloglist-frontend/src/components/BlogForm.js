@@ -1,3 +1,5 @@
+// uuden blogin luominen omassa komponentissaan
+
 const BlogForm = ({
     handleUusiBlogi,
     handleTitleChange,
