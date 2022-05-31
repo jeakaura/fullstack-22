@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Footer from './components/Footer'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -14,7 +16,9 @@ const App = () => {
 
   const [title, setTitle] = useState('') 
   const [author, setAuthor] = useState('') 
-  const [url, setUrl] = useState('') 
+  const [url, setUrl] = useState('')
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -64,6 +68,7 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      blogFormRef.current.toggleVisibility()
       setErrorMessage(`Uusi blogi: "${title}", kirjoittajalta: "${author}" lisättiin!`)
       setTimeout(() => {
         setErrorMessage(null)
@@ -124,37 +129,19 @@ const App = () => {
       <p>{user.name} on kirjautunut sisään 
       <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
       </p>
-      <h3>Luo uusi</h3>
-      <form onSubmit={handleUusiBlogi}>
-        <div>
-          otsikko:
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          kirjoittaja:
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          linkki:
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">luo uusi</button>
-      </form>
+      
+      <Togglable buttonLabel='Luo uusi' ref={blogFormRef}>
+        <BlogForm 
+          handleUusiBlogi={handleUusiBlogi}
+          handleAuthorChange={({ target }) => setAuthor(target.value)}
+          handleTitleChange={({ target }) => setTitle(target.value)}
+          handleUrlChange={({ target }) => setUrl(target.value)}
+          title={title}
+          author={author}
+          url={url}
+        />
+      </Togglable>
+
       <h3>Blogilista</h3>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
