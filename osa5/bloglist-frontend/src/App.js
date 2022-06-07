@@ -99,6 +99,28 @@ const App = () => {
     }
   }
 
+  const handlePoista = async (id) => {
+    console.log('yritetään poistaa:', id)
+    const kysymys = window.confirm("Haluatko varmasti poistaa blogin?")
+    if (kysymys) {
+      try {
+        await blogService.deleteBlog(id)
+        blogService.getAll().then(blogs => 
+          setBlogs( blogs )
+        )
+        setErrorMessage('Blogi poistettiin!')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      } catch (exception) {
+        setErrorMessage('Virhe: Poisto epäonnistui')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
+    }
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
@@ -162,7 +184,7 @@ const App = () => {
 
       <h3>Blogilista</h3>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} paivitaTykkays={handleTykkaa} />
+        <Blog key={blog.id} blog={blog} paivitaTykkays={handleTykkaa} poistaBlogi={handlePoista} />
       )}
       <Footer />
     </div>
