@@ -104,6 +104,10 @@ const App = () => {
     setUser(null)
   }
 
+  blogs.sort(function (a,b) {
+    return b.likes - a.likes
+  })
+
   if (user === null) {
     return (
       <div>
