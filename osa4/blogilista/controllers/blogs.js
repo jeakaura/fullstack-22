@@ -8,6 +8,17 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs.map((blog) => blog.toJSON()))
 })
 
+blogsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params
+  const blog = await Blog.findById(id)
+
+  if (blog) {
+    response.json(blog.toJSON())
+  } else {
+    response.status(404).end()
+  }
+})
+
 blogsRouter.post('/', async (request, response, next) => {
   const body = request.body
 
@@ -52,6 +63,23 @@ blogsRouter.delete('/:id', async (request, response) => {
     response.status(204).end()
   } else {
     response.status(401).json({ error: 'ei oikeuksia poistaa' })
+  }
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const { body } = request
+  const { id } = request.params
+
+  const blog =  {
+    likes: body.likes
+  }
+
+  const paivitettyBlogi = await Blog.findByIdAndUpdate(id, blog, { new: true })
+
+  if (paivitettyBlogi) {
+    response.status(200).json(paivitettyBlogi.toJSON())
+  } else {
+    response.status(404).end()
   }
 })
 

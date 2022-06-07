@@ -85,6 +85,20 @@ const App = () => {
     }
   }
 
+  const handleTykkaa = async (id, blogObject) => {
+    try {
+      await blogService.update({id, blogObject})
+      blogService.getAll().then(blogs =>
+        setBlogs( blogs )
+      )
+    } catch (exception) {
+      setErrorMessage('Virhe: Tykkäys epäonnistui')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
@@ -144,7 +158,7 @@ const App = () => {
 
       <h3>Blogilista</h3>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} paivitaTykkays={handleTykkaa} />
       )}
       <Footer />
     </div>
