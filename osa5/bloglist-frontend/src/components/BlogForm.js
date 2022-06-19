@@ -20,6 +20,7 @@ const BlogForm = ({
             value={title}
             name="Title"
             onChange={handleTitleChange}
+            placeholder='write here blog title'
           />
         </div>
         <div>
@@ -40,7 +41,7 @@ const BlogForm = ({
             onChange={handleUrlChange}
           />
         </div>
-        <button type="submit">Luo uusi</button>
+        <button type="submit">Luo uusi blogi</button>
       </form>
     </div>
   )
