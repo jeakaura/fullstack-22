@@ -10,12 +10,12 @@ import Togglable from './components/Togglable'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [title, setTitle] = useState('') 
-  const [author, setAuthor] = useState('') 
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   const blogFormRef = useRef()
@@ -23,7 +23,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -87,7 +87,7 @@ const App = () => {
 
   const handleTykkaa = async (id, blogObject) => {
     try {
-      await blogService.update({id, blogObject})
+      await blogService.update( { id, blogObject } )
       blogService.getAll().then(blogs =>
         setBlogs( blogs )
       )
@@ -101,11 +101,11 @@ const App = () => {
 
   const handlePoista = async (id) => {
     console.log('yritetään poistaa:', id)
-    const kysymys = window.confirm("Haluatko varmasti poistaa blogin?")
+    const kysymys = window.confirm('Haluatko varmasti poistaa blogin?')
     if (kysymys) {
       try {
         await blogService.deleteBlog(id)
-        blogService.getAll().then(blogs => 
+        blogService.getAll().then(blogs =>
           setBlogs( blogs )
         )
         setErrorMessage('Blogi poistettiin!')
@@ -139,7 +139,7 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             käyttäjätunnus
-              <input
+            <input
               type="text"
               value={username}
               name="Username"
@@ -148,7 +148,7 @@ const App = () => {
           </div>
           <div>
             salasana
-              <input
+            <input
               type="password"
               value={password}
               name="Password"
@@ -166,12 +166,12 @@ const App = () => {
     <div>
       <h1>Blogit</h1>
       <Notification message={errorMessage} />
-      <p>{user.name} on kirjautunut sisään 
-      <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
+      <p>{user.name} on kirjautunut sisään
+        <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
       </p>
-      
+
       <Togglable buttonLabel='Luo uusi' ref={blogFormRef}>
-        <BlogForm 
+        <BlogForm
           handleUusiBlogi={handleUusiBlogi}
           handleAuthorChange={({ target }) => setAuthor(target.value)}
           handleTitleChange={({ target }) => setTitle(target.value)}

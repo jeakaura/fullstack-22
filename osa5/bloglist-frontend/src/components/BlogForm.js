@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 
 const BlogForm = ({
-    handleUusiBlogi,
-    handleTitleChange,
-    handleAuthorChange,
-    handleUrlChange,
-    title,
-    author,
-    url
-   }) => {
-   return (
-     <div>
-       <h3>Luo uusi</h3>
+  handleUusiBlogi,
+  handleTitleChange,
+  handleAuthorChange,
+  handleUrlChange,
+  title,
+  author,
+  url
+}) => {
+  return (
+    <div>
+      <h3>Luo uusi</h3>
       <form onSubmit={handleUusiBlogi}>
         <div>
           otsikko:
@@ -42,10 +42,10 @@ const BlogForm = ({
         </div>
         <button type="submit">Luo uusi</button>
       </form>
-     </div>
-   )
+    </div>
+  )
 }
- 
+
 BlogForm.propTypes = {
   handleUusiBlogi: PropTypes.func.isRequired,
   handleTitleChange: PropTypes.func.isRequired,
