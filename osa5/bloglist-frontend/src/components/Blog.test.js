@@ -36,5 +36,29 @@ test('clicking the button calls event handler once', async () => {
     const button = screen.getByText('Avaa')
     await user.click(button)
   
-    expect(mockHandler.mock.calls).toHaveLength(0)
+    expect(mockHandler.mock.calls).toHaveLength(1)
+})
+
+test('clicking like button twice', async () => {
+    const blog = {
+        title: 'Testi blogiotsikko',
+        author: 'Matti Meikäläinen',
+        likes: 4,
+        url: 'http://localhost:3000',
+      }
+  
+    const mockHandler = jest.fn()
+  
+    const { container } = render(<Blog blog={blog} toggleVisibility={mockHandler} />)
+    container.querySelector('.blog')
+
+    const user = userEvent.setup()
+    const avaabutton = screen.getByText('Avaa')
+    await user.click(avaabutton)
+
+    const likebutton = screen.getByText('Tykkää')
+    await user.click(likebutton)
+    await user.click(likebutton)
+  
+    expect(mockHandler.mock.calls).toHaveLength(2)
 })
