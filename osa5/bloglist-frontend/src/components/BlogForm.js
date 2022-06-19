@@ -1,4 +1,4 @@
-// uuden blogin luominen omassa komponentissaan
+import PropTypes from 'prop-types'
 
 const BlogForm = ({
     handleUusiBlogi,
@@ -46,4 +46,14 @@ const BlogForm = ({
    )
 }
  
+BlogForm.propTypes = {
+  handleUusiBlogi: PropTypes.func.isRequired,
+  handleTitleChange: PropTypes.func.isRequired,
+  handleAuthorChange: PropTypes.func.isRequired,
+  handleUrlChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
+}
+
 export default BlogForm
