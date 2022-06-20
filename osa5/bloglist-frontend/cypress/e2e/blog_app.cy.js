@@ -74,6 +74,16 @@ describe('Blog app', function() {
       cy.contains('Tykkää').click()
       cy.contains('Tykkäykset: 1')
     })
+
+    it('sen poistaminen onnistuu', function() {
+      cy.contains('Avaa').click()
+      cy.contains('Poista').click()
+      cy.get('.ilmoitus')
+        .should('contain', 'Blogi poistettiin!')
+        .and('have.css', 'color', 'rgb(0, 128, 0)')
+        .and('have.css', 'border-style', 'solid')
+      cy.get('html').should('not.contain', 'Blogipostaus luotu Cypressilla')
+    })
   })
 
 })
