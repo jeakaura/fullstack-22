@@ -140,6 +140,7 @@ const App = () => {
           <div>
             käyttäjätunnus
             <input
+              id='username'
               type="text"
               value={username}
               name="Username"
@@ -149,13 +150,14 @@ const App = () => {
           <div>
             salasana
             <input
+              id='password'
               type="password"
               value={password}
               name="Password"
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type="submit">kirjaudu sisään</button>
+          <button id="login-button" type="submit">kirjaudu sisään</button>
         </form>
         <Footer />
       </div>
@@ -167,7 +169,7 @@ const App = () => {
       <h1>Blogit</h1>
       <Notification message={errorMessage} />
       <p>{user.name} on kirjautunut sisään
-        <button onClick={handleLogout} type="button">Kirjaudu ulos</button>
+        <button id="logout-button" onClick={handleLogout} type="button">Kirjaudu ulos</button>
       </p>
 
       <Togglable buttonLabel='Luo uusi' ref={blogFormRef}>
