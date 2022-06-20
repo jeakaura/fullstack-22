@@ -86,4 +86,34 @@ describe('Blog app', function() {
     })
   })
 
+  describe('Useampi blogipostaus',function() {
+    beforeEach(function() {
+      cy.login({ username: 'meikalainen', password: 'salainen123' })
+      cy.createBlog({
+        title: 'Eka blogipostaus luotu Cypressilla & vähiten tykkäyksiä',
+        author: 'Meikäläinen Matti',
+        url: 'http://localhost:3000',
+        likes: 10
+      })
+      cy.createBlog({
+        title: 'Toka blogipostaus luotu Cypressilla & enemmän tykkäyksiä',
+        author: 'Meikäläinen Matti',
+        url: 'http://localhost:3000',
+        likes: 20
+      })
+      cy.createBlog({
+        title: 'Kolmas blogipostaus luotu Cypressilla & keskiverrosti tykkäyksiä',
+        author: 'Meikäläinen Matti',
+        url: 'http://localhost:3000',
+        likes: 15
+      })
+    })
+
+    it('tykkäysjärjestyksessä', function() {
+      cy.get('.blog').eq(0).should('contain', 'Toka blogipostaus luotu Cypressilla & enemmän tykkäyksiä')
+      cy.get('.blog').eq(1).should('contain', 'Kolmas blogipostaus luotu Cypressilla & keskiverrosti tykkäyksiä')
+      cy.get('.blog').eq(2).should('contain', 'Eka blogipostaus luotu Cypressilla & vähiten tykkäyksiä')
+    })
+  })
+
 })
