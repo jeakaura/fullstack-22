@@ -41,4 +41,20 @@ describe('Blog app', function() {
     })
   })
 
+  describe('Sisäänkirjautuneena', function() {
+    beforeEach(function() {
+      cy.login({ username: 'meikalainen', password: 'salainen123' })
+    })
+
+    it('blogin luominen onnistuu', function() {
+      cy.contains('Luo uusi').click()
+      cy.get('#blogtitle').type('Blogipostaus luotu Cypressilla')
+      cy.get('#blogauthor').type('Meikäläinen Matti')
+      cy.get('#blogurl').type('http://localhost:3000')
+      cy.contains('Luo uusi blogi').click()
+
+      cy.contains('Blogipostaus luotu Cypressilla')
+    })
+  })
+
 })

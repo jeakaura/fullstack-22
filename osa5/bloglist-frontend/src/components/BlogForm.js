@@ -16,6 +16,7 @@ const BlogForm = ({
         <div>
           otsikko:
           <input
+            id="blogtitle"
             type="text"
             value={title}
             name="Title"
@@ -26,6 +27,7 @@ const BlogForm = ({
         <div>
           kirjoittaja:
           <input
+            id="blogauthor"
             type="text"
             value={author}
             name="Author"
@@ -35,6 +37,7 @@ const BlogForm = ({
         <div>
           linkki:
           <input
+            id="blogurl"
             type="text"
             value={url}
             name="Url"
