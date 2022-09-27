@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+/*
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
@@ -6,7 +7,19 @@ import loginService from './services/login'
 import Footer from './components/Footer'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+*/
+const App = () => {
+  const [x, setX] = useState(0)
+  console.log(x)
+  return (
+    <div>
+      {x}
+      <button onClick={(value) => setX(value)}>press</button>
+    </div>
+  )
+}
 
+/*
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
@@ -192,5 +205,5 @@ const App = () => {
     </div>
   )
 }
-
+*/
 export default App
